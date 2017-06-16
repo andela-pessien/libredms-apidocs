@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: LibreDMS API Reference
 
 toc_footers:
   - © 2017 Princess-Jewel Essien

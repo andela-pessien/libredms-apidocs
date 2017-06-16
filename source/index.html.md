@@ -107,8 +107,7 @@ body: {
 
 `POST /api/users`
 
-This endpoint signs up a user.
-Name, email and password fields are mandatory: name must be a first and last name combination, emails must be valid and passwords must be at least 8 characters long (and cannot consist of only whitespaces). The created user's profile visibility is set to private by default, and a JSON web token is returned which should be used to authenticate future requests.
+This endpoint signs up a user. Name, email and password fields are mandatory: name must be a first and last name combination, emails must be valid and passwords must be at least 8 characters long (and cannot consist of only whitespaces). The created user's profile visibility is set to private by default, and a JSON web token is returned which should be used to authenticate future requests.
 
 Note: You cannot set your own role!
 
@@ -146,9 +145,7 @@ body: {
 
 `POST /api/auth/login`
 
-This endpoint signs in a user.
-Email and password fields are mandatory.
-A JSON web token is returned which should be used to authenticate future requests.
+This endpoint signs in a user. Email and password fields are mandatory. A JSON web token is returned which should be used to authenticate future requests.
 
 ## Sign Out
 
@@ -237,9 +234,8 @@ body: {
 ```
 
 This endpoint retrieves a user by ID.
-You can always retrieve your own details.
-Administrators and the superadministrator can retrieve any user's details.
-Other users can only retrieve a user's details if their `isPrivate` attribute is set to `true`.
+
+You can always retrieve your own details. Administrators and the superadministrator can retrieve any user's details. Other users can only retrieve a user's details if their `isPrivate` attribute is set to `true`.
 
 ### HTTP Request
 
@@ -270,8 +266,10 @@ body: {
 }
 ```
 
-This endpoint updates a user's details
-Users can only update their own details regardless of privilege level.
+This endpoint updates a user's details.
+
+Users can update only their own details regardless of privilege level.
+
 Again, you cannot set your own role.
 
 ### HTTP Request
@@ -304,6 +302,7 @@ body: {
 ```
 
 This endpoint promotes or demotes a user from one privilege level to another.
+
 Administrators and the superadministrator can promote a user to reviewer or administrator, or demote a user from reviewer to regular user. Only the superadministrator can demote an administrator.
 
 ### HTTP Request
@@ -322,9 +321,9 @@ body: {
 }
 ```
 
-This endpoint deletes a user
-Users can delete only themselves, and the superadministrator can delete any user.
-Deleting a user makes their documents visible only to the superadministrator.
+This endpoint deletes a user.
+
+Users can delete only themselves, and the superadministrator can delete any user. Deleting a user makes their documents visible only to the superadministrator.
 
 ### HTTP Request
 
@@ -360,6 +359,7 @@ body: {
 ```
 
 This endpoint searches for a user by name.
+
 Providing keyword(s) to search for is mandatory.
 
 ### HTTP Request
@@ -373,3 +373,330 @@ Parameter | Default | Description
 `q` or `query` | - | The keyword(s) to match
 limit | 10 | The (maximum) number of users to return
 offset | 0 | The number of users to offset list by
+
+# Documents
+
+## Create a document
+
+> Request:
+
+```json
+{
+  "title": "Test Document",
+  "content": "Test content"
+}
+```
+
+> Response:
+
+```json
+status: 201
+
+body: {
+  "id": "4617f1df-7395-4c2c-b9c8-703ae98fdc88",
+  "title": "Test Document",
+  "content": "Test content",
+  "access": "private",
+  "accesslevel": "view",
+  "type": "text",
+  "userId": "7cbc5ed7-2a28-4113-9eb6-6ebaf095624c",
+  "userRole": 4,
+  "createdAt": "2017-06-16T18:01:08.951Z",
+  "updatedAt": "2017-06-16T18:01:08.951Z"
+}
+```
+
+### HTTP Request
+
+`POST /api/documents`
+
+This endpoint creates a document.
+
+Title field is mandatory. The created document's access is set to private by default, and the owner and role level of the document are automatically set based on the claims in the `x-access-token` header.
+
+## List documents
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "list": [
+    {
+        "id": "9d68d265-2441-4423-9cd8-b9e4738b085b",
+        "title": "Another Test Document",
+        "type": "text",
+        "access": "private",
+        "createdAt": "2017-06-16T18:04:14.045Z",
+        "updatedAt": "2017-06-16T18:04:14.045Z"
+    },
+    {
+        "id": "4617f1df-7395-4c2c-b9c8-703ae98fdc88",
+        "title": "Test Document",
+        "type": "text",
+        "access": "private",
+        "createdAt": "2017-06-16T18:01:08.951Z",
+        "updatedAt": "2017-06-16T18:01:08.951Z"
+    }
+  ],
+  "metadata": {
+    "total": 2,
+    "pages": 1,
+    "currentPage": 1,
+    "pageSize": 10
+  }
+}
+```
+
+This endpoint retrieves all documents the requester has access to.
+
+### HTTP Request
+
+`GET /api/documents`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+limit | 10 | The (maximum) number of documents to return
+offset | 0 | The number of documents to offset list by
+
+## List a user's documents
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "list": [
+    {
+        "id": "9d68d265-2441-4423-9cd8-b9e4738b085b",
+        "title": "Another Test Document",
+        "type": "text",
+        "access": "private",
+        "createdAt": "2017-06-16T18:04:14.045Z",
+        "updatedAt": "2017-06-16T18:04:14.045Z"
+    },
+    {
+        "id": "4617f1df-7395-4c2c-b9c8-703ae98fdc88",
+        "title": "Test Document",
+        "type": "text",
+        "access": "private",
+        "createdAt": "2017-06-16T18:01:08.951Z",
+        "updatedAt": "2017-06-16T18:01:08.951Z"
+    }
+  ],
+  "metadata": {
+    "total": 2,
+    "pages": 1,
+    "currentPage": 1,
+    "pageSize": 10
+  }
+}
+```
+
+This endpoint retrieves all of a user's documents that the requester has access to.
+
+### HTTP Request
+
+`GET /api/users/:id/documents`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+limit | 10 | The (maximum) number of documents to return
+offset | 0 | The number of documents to offset list by
+
+## Search for a document
+
+> Request: `GET /api/search/documents?q=Another`
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "list": [
+    {
+      "id": "9d68d265-2441-4423-9cd8-b9e4738b085b",
+      "title": "Another Test Document",
+      "type": "text",
+      "access": "private",
+      "userId": "7cbc5ed7-2a28-4113-9eb6-6ebaf095624c",
+      "createdAt": "2017-06-16T18:04:14.045Z",
+      "updatedAt": "2017-06-16T18:04:14.045Z",
+      "User": {
+        "id": "7cbc5ed7-2a28-4113-9eb6-6ebaf095624c",
+        "name": "Jane  Doe",
+        "roleId": 4
+      }
+    }
+  ],
+  "metadata": {
+    "total": 1,
+    "pages": 1,
+    "currentPage": 1,
+    "pageSize": 10
+  }
+}
+```
+
+This endpoint searches for a document by title.
+
+Providing keyword(s) to search for is mandatory.
+
+### HTTP Request
+
+`GET /api/search/documents`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+`q` or `query` | - | The keyword(s) to match
+limit | 10 | The (maximum) number of documents to return
+offset | 0 | The number of documents to offset list by
+
+## Retrieve a document
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "id": "4617f1df-7395-4c2c-b9c8-703ae98fdc88",
+  "title": "Test Document",
+  "content": "Test content",
+  "access": "private",
+  "accesslevel": "view",
+  "type": "text",
+  "userId": "7cbc5ed7-2a28-4113-9eb6-6ebaf095624c",
+  "userRole": 4,
+  "createdAt": "2017-06-16T18:01:08.951Z",
+  "updatedAt": "2017-06-16T18:01:08.951Z"
+}
+```
+
+This endpoint retrieves a document by ID.
+
+You can always retrieve your own documents. Administrators and the superadministrator can retrieve any document. Other users can only retrieve a document if it is public or it is set to role access (and the requester is on the same or greater privilege level as the owner).
+
+### HTTP Request
+
+`GET /api/documents/:id`
+
+## Update a document
+
+> Request
+
+```json
+{
+  "title": "Updated Test Document"
+}
+```
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "id": "4617f1df-7395-4c2c-b9c8-703ae98fdc88",
+  "title": "Updated Test Document",
+  "content": "Test content",
+  "access": "private",
+  "accesslevel": "view",
+  "type": "text",
+  "userId": "7cbc5ed7-2a28-4113-9eb6-6ebaf095624c",
+  "userRole": 4,
+  "createdAt": "2017-06-16T18:01:08.951Z",
+  "updatedAt": "2017-06-16T18:08:09.772Z"
+}
+```
+
+This endpoint updates a document.
+
+Users can update only their own documents regardless of privilege level.
+
+### HTTP Request
+
+`PUT /api/documents/:id`
+
+## Delete a document
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "message": "Document deleted successfully"
+}
+```
+
+This endpoint deletes a document.
+
+Users can delete only their own documents, and the superadministrator can delete any document.
+
+### HTTP Request
+
+`DELETE /api/documents/:id`
+
+# Roles
+
+## List roles
+
+> Response:
+
+```json
+status: 200
+
+body: [
+  {
+    "id": 1,
+    "label": "Superadministrator"
+  },
+  {
+    "id": 2,
+    "label": "Administrator"
+  },
+  {
+    "id": 3,
+    "label": "Reviewer"
+  },
+  {
+    "id": 4,
+    "label": "Regular"
+  }
+]
+```
+
+This endpoint retrieves all roles.
+
+### HTTP Request
+
+`GET /api/roles`
+
+## Retrieve a role
+
+> Response:
+
+```json
+status: 200
+
+body: {
+  "id": 2,
+  "label": "Administrator"
+}
+```
+
+This endpoint retrieves a role by ID.
+
+### HTTP Request
+
+`GET /api/roles/:id`

@@ -436,8 +436,7 @@
 
 <p><code class="prettyprint">POST /api/users</code></p>
 
-<p>This endpoint signs up a user.
-Name, email and password fields are mandatory: name must be a first and last name combination, emails must be valid and passwords must be at least 8 characters long (and cannot consist of only whitespaces). The created user&rsquo;s profile visibility is set to private by default, and a JSON web token is returned which should be used to authenticate future requests.</p>
+<p>This endpoint signs up a user. Name, email and password fields are mandatory: name must be a first and last name combination, emails must be valid and passwords must be at least 8 characters long (and cannot consist of only whitespaces). The created user&rsquo;s profile visibility is set to private by default, and a JSON web token is returned which should be used to authenticate future requests.</p>
 
 <p>Note: You cannot set your own role!</p>
 
@@ -473,9 +472,7 @@ Name, email and password fields are mandatory: name must be a first and last nam
 
 <p><code class="prettyprint">POST /api/auth/login</code></p>
 
-<p>This endpoint signs in a user.
-Email and password fields are mandatory.
-A JSON web token is returned which should be used to authenticate future requests.</p>
+<p>This endpoint signs in a user. Email and password fields are mandatory. A JSON web token is returned which should be used to authenticate future requests.</p>
 
 <h2 id="sign-out">Sign Out</h2>
 
@@ -574,10 +571,9 @@ An empty access token header is returned.</p>
   </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T14:23:38.838Z"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a user by ID.
-You can always retrieve your own details.
-Administrators and the superadministrator can retrieve any user&rsquo;s details.
-Other users can only retrieve a user&rsquo;s details if their <code class="prettyprint">isPrivate</code> attribute is set to <code class="prettyprint">true</code>.</p>
+<p>This endpoint retrieves a user by ID.</p>
+
+<p>You can always retrieve your own details. Administrators and the superadministrator can retrieve any user&rsquo;s details. Other users can only retrieve a user&rsquo;s details if their <code class="prettyprint">isPrivate</code> attribute is set to <code class="prettyprint">true</code>.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -606,9 +602,11 @@ Other users can only retrieve a user&rsquo;s details if their <code class="prett
   </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T14:23:38.838Z"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint updates a user&rsquo;s details
-Users can only update their own details regardless of privilege level.
-Again, you cannot set your own role.</p>
+<p>This endpoint updates a user&rsquo;s details.</p>
+
+<p>Users can update only their own details regardless of privilege level.</p>
+
+<p>Again, you cannot set your own role.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -637,8 +635,9 @@ Again, you cannot set your own role.</p>
   </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T14:23:38.838Z"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint promotes or demotes a user from one privilege level to another.
-Administrators and the superadministrator can promote a user to reviewer or administrator, or demote a user from reviewer to regular user. Only the superadministrator can demote an administrator.</p>
+<p>This endpoint promotes or demotes a user from one privilege level to another.</p>
+
+<p>Administrators and the superadministrator can promote a user to reviewer or administrator, or demote a user from reviewer to regular user. Only the superadministrator can demote an administrator.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -655,9 +654,9 @@ Administrators and the superadministrator can promote a user to reviewer or admi
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User deleted successfully"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a user
-Users can delete only themselves, and the superadministrator can delete any user.
-Deleting a user makes their documents visible only to the superadministrator.</p>
+<p>This endpoint deletes a user.</p>
+
+<p>Users can delete only themselves, and the superadministrator can delete any user. Deleting a user makes their documents visible only to the superadministrator.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -691,8 +690,9 @@ Deleting a user makes their documents visible only to the superadministrator.</p
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint searches for a user by name.
-Providing keyword(s) to search for is mandatory.</p>
+<p>This endpoint searches for a user by name.</p>
+
+<p>Providing keyword(s) to search for is mandatory.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -723,6 +723,368 @@ Providing keyword(s) to search for is mandatory.</p>
 <td>The number of users to offset list by</td>
 </tr>
 </tbody></table>
+
+<h1 id="documents">Documents</h1>
+
+<h2 id="create-a-document">Create a document</h2>
+
+<blockquote>
+<p>Request:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Document"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test content"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">201</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4617f1df-7395-4c2c-b9c8-703ae98fdc88"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Document"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test content"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accesslevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7cbc5ed7-2a28-4113-9eb6-6ebaf095624c"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userRole"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST /api/documents</code></p>
+
+<p>This endpoint creates a document.</p>
+
+<p>Title field is mandatory. The created document&rsquo;s access is set to private by default, and the owner and role level of the document are automatically set based on the claims in the <code class="prettyprint">x-access-token</code> header.</p>
+
+<h2 id="list-documents">List documents</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"list"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9d68d265-2441-4423-9cd8-b9e4738b085b"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Another Test Document"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4617f1df-7395-4c2c-b9c8-703ae98fdc88"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Document"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currentPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all documents the requester has access to.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/documents</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>10</td>
+<td>The (maximum) number of documents to return</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>0</td>
+<td>The number of documents to offset list by</td>
+</tr>
+</tbody></table>
+
+<h2 id="list-a-users-documents">List a user&rsquo;s documents</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"list"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9d68d265-2441-4423-9cd8-b9e4738b085b"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Another Test Document"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4617f1df-7395-4c2c-b9c8-703ae98fdc88"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Document"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currentPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all of a user&rsquo;s documents that the requester has access to.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/users/:id/documents</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>10</td>
+<td>The (maximum) number of documents to return</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>0</td>
+<td>The number of documents to offset list by</td>
+</tr>
+</tbody></table>
+
+<h2 id="search-for-a-document">Search for a document</h2>
+
+<blockquote>
+<p>Request: <code class="prettyprint">GET /api/search/documents?q=Another</code></p>
+
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"list"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9d68d265-2441-4423-9cd8-b9e4738b085b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Another Test Document"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7cbc5ed7-2a28-4113-9eb6-6ebaf095624c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:04:14.045Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"User"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7cbc5ed7-2a28-4113-9eb6-6ebaf095624c"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane  Doe"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"roleId"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currentPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pageSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint searches for a document by title.</p>
+
+<p>Providing keyword(s) to search for is mandatory.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/search/documents</code></p>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">q</code> or <code class="prettyprint">query</code></td>
+<td>-</td>
+<td>The keyword(s) to match</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>10</td>
+<td>The (maximum) number of documents to return</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>0</td>
+<td>The number of documents to offset list by</td>
+</tr>
+</tbody></table>
+
+<h2 id="retrieve-a-document">Retrieve a document</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4617f1df-7395-4c2c-b9c8-703ae98fdc88"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Document"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test content"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accesslevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7cbc5ed7-2a28-4113-9eb6-6ebaf095624c"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userRole"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a document by ID.</p>
+
+<p>You can always retrieve your own documents. Administrators and the superadministrator can retrieve any document. Other users can only retrieve a document if it is public or it is set to role access (and the requester is on the same or greater privilege level as the owner).</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/documents/:id</code></p>
+
+<h2 id="update-a-document">Update a document</h2>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Updated Test Document"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4617f1df-7395-4c2c-b9c8-703ae98fdc88"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Updated Test Document"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test content"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"access"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accesslevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7cbc5ed7-2a28-4113-9eb6-6ebaf095624c"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"userRole"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:01:08.951Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updatedAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-06-16T18:08:09.772Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint updates a document.</p>
+
+<p>Users can update only their own documents regardless of privilege level.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT /api/documents/:id</code></p>
+
+<h2 id="delete-a-document">Delete a document</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Document deleted successfully"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint deletes a document.</p>
+
+<p>Users can delete only their own documents, and the superadministrator can delete any document.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE /api/documents/:id</code></p>
+
+<h1 id="roles">Roles</h1>
+
+<h2 id="list-roles">List roles</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Superadministrator"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Administrator"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reviewer"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Regular"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all roles.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/roles</code></p>
+
+<h2 id="retrieve-a-role">Retrieve a role</h2>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">status</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="w">
+
+</span><span class="err">body</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Administrator"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a role by ID.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET /api/roles/:id</code></p>
 
           <h1 id="errors">Errors</h1>
 
